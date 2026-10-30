@@ -2,7 +2,6 @@ import { Router, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User } from '../database';
-import { IUser } from '../interface';
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
@@ -31,18 +30,17 @@ router.post('/register', async (req: Request, res: Response) => {
     await newUser.save();
 
     res.status(201).json({ message: 'User registered successfully!', userId: newUser._id });
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error during registration.' });
+  } catch (error: unknown) {
+    res.status(500).json({ error: 'Something went wrong.' });
   }
 });
 
-// Login Route (Generates JWT)
 router.post('/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required.' });
+      return res.status(400).json({ error: 'Required field(s): Email, Password.' });
     }
 
     const user = await User.findOne({ email });
@@ -62,7 +60,7 @@ router.post('/login', async (req: Request, res: Response) => {
       message: 'Login successful!',
       token,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     res.status(500).json({ error: 'Internal server error during login.' });
   }
 });
