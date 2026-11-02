@@ -11,7 +11,6 @@ export const registerHandler = async (req: Request, res: Response): Promise<void
     }
 
     const existingUser = await User.findOne({ email });
-
     if (existingUser) {
       res.status(400).json({ error: 'User already exists.' });
       return;

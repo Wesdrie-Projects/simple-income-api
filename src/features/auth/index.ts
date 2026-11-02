@@ -4,5 +4,6 @@ import registerRouter from './register';
 const router = Router();
 
 router.use(registerRouter);
+router.use(registerRouter);
 
 export default router;
