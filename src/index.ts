@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
-import { authMiddleware, AuthRequest } from './middleware';
+import { authMiddleware } from './middleware';
 import { connectDatabaseAsync } from './database';
 import authRoutes from './features/auth';
 
@@ -11,10 +11,9 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 
-app.get('/protected', authMiddleware, (req: AuthRequest, res: Response) => {
+app.get('/protected', authMiddleware, (req: Request, res: Response) => {
   res.json({
     message: 'Access granted to protected database data!',
-    user: req.user,
   });
 });
 

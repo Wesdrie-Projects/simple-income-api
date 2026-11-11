@@ -26,7 +26,7 @@ export const registerHandler = async (req: Request, res: Response): Promise<void
 
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully!', userId: newUser._id });
+    res.status(200).json({ message: 'User registered successfully!' });
   } catch (error: unknown) {
     res.status(500).json({ error: 'Something went wrong.' });
   }

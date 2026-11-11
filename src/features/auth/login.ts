@@ -35,8 +35,7 @@ export const loginHandler = async (req: Request, res: Response): Promise<void> =
 
     res.status(200).json({
       message: 'Logged in successfully!',
-      token,
-      userId: existingUser._id,
+      data: token,
     });
   } catch (error: unknown) {
     res.status(500).json({ error: 'Something went wrong.' });
